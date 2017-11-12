@@ -182,6 +182,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
  */
 app.post('/api/login', authenticateController.authenticate);
 app.post('/api/add-user', authenticateController.addUser);
+app.post('/api/send-email', authenticateController.sendEmail);
 app.get('/api', apiController.getApi);
 app.get('/api/lastfm', apiController.getLastfm);
 app.get('/api/nyt', apiController.getNewYorkTimes);

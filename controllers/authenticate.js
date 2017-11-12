@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const nodemailer = require('nodemailer')
 
 module.exports.authenticate = function (req, res) {
   const email = req.body.email || req.header.email;
@@ -17,7 +18,7 @@ module.exports.authenticate = function (req, res) {
         message: 'User not found'
       });
     }
-    if (users.comparePassword(pwd, users.password)) {
+    if (users != null && users.comparePassword(pwd, users.password)) {
       // User encoding password to generate token
       const jsonUser = {
         email: users.email,
@@ -42,7 +43,7 @@ module.exports.authenticate = function (req, res) {
     } else {
       res.json({
         status: 'error',
-        message: 'User name or password is incorrect'
+        message: 'Неверное имя пользователя или пароль'
       });
     }
   });
@@ -64,6 +65,7 @@ module.exports.addUser = (req, res) => {
     res.json({ message: 'Please send email' });
     return;
   }
+  // TODO check why email doesn't work (probably due to plugin)
   // if (!email.isEmail) {
   //   res.json({ status: 'error', message: 'Not valid email' });
   //   return;
@@ -79,5 +81,30 @@ module.exports.addUser = (req, res) => {
   res.json({
     status: 'ok',
     message: 'user successfully created'
+  });
+};
+
+module.exports.sendEmail = (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'maksimbender081991@gmail.com',
+      pass: '1ng2l3ch4K'
+    }
+  });
+
+  const mailOptions = {
+    from: 'maksimbender081991@gmail.com',
+    to: 'maksim_bender08@mail.ru',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
   });
 }
