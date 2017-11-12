@@ -88,8 +88,8 @@ module.exports.sendEmail = (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'maksimbender081991@gmail.com',
-      pass: '1ng2l3ch4K'
+      user: 'mshsk.financial@gmail.com',
+      pass: 'asdf9qh23ouhfu9q20fjaw'
     }
   });
 
