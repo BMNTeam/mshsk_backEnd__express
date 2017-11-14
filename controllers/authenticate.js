@@ -126,7 +126,9 @@ module.exports.sendEmail = (req, res) => {
     message: req.body.message
   };
 
-  if (emailInfo.email === null && emailInfo.name === null && emailInfo.message === null) {
+  if (emailInfo.email === null ||
+      emailInfo.name === null ||
+      emailInfo.message === null) {
     return res.json(reCaptchaError);
   }
 
@@ -137,7 +139,7 @@ module.exports.sendEmail = (req, res) => {
       pass: 'asdf9qh23ouhfu9q20fjaw'
     }
   });
-  if (req.body.captcha === null) {
+  if (req.body.captcha === null || req.body.captcha === '') {
     return res.json(reCaptchaError);
   } else {
     checkCaptcha(req.body.captcha).then((response) => {
