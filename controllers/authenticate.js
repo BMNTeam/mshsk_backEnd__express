@@ -126,6 +126,10 @@ module.exports.sendEmail = (req, res) => {
     message: req.body.message
   };
 
+  if (emailInfo.email === null && emailInfo.name === null && emailInfo.message === null) {
+    return res.json(reCaptchaError);
+  }
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -144,8 +148,7 @@ module.exports.sendEmail = (req, res) => {
           from: emailInfo.email,
           to: 'maksim_bender08@mail.ru',
           subject: 'Обращение в службу поддержки приложения',
-          text: `Пользователь ${emailInfo.name} оставил сообщение '${emailInfo.message}' 
-          с email: ${emailInfo.email}`
+          text: `Пользователь ${emailInfo.name} оставил сообщение '${emailInfo.message}' с email: ${emailInfo.email}`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
