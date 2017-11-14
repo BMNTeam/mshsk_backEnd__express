@@ -144,7 +144,8 @@ module.exports.sendEmail = (req, res) => {
           from: emailInfo.email,
           to: 'maksim_bender08@mail.ru',
           subject: 'Обращение в службу поддержки приложения',
-          text: emailInfo.message
+          text: 'Пользователь' + emailInfo.name + ' оставил сообщение' + emailInfo.message +
+              'с email:' + userInfo.email
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
